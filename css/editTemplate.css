@@ -1,0 +1,275 @@
+html, body, ul {
+    margin:0;
+    padding:0;
+}
+input {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+     -webkit-appearance: none; 
+    outline: none;
+}   
+  #head {
+            position:fixed;
+            z-index:999;
+            top:0;
+            width:100%;
+            /*height:40%;*/
+            background:#40D8B8;
+            text-align:center;
+            overflow:hidden;
+            margin-bottom:0;
+        }
+        .record {
+            font-size:0.72rem;
+            color:#fff;  
+                padding: 0;
+    margin: 0;
+        padding: .6225rem 0;
+        }
+       
+        .add,.back{
+            position:absolute;
+            margin:0;
+            top:.5rem;
+            right:0.6rem;
+            /*width:1.5rem;
+            height:1.5rem;*/
+            background-image:url("../img/check.png");
+            background-size:1.25rem 1.25rem;          
+            background-position:0 0;
+
+                position: absolute;
+    width: 1.25rem;
+    height: 0.96rem;
+    /*top: 50%;*/
+    /*margin-top: -0.48rem;*/
+
+        }
+         .back{
+            left:0.6rem;
+            background-image:url("../img/back.png");
+        }
+       
+        #newAdd{
+            display:none;
+        }
+        #new {
+            display:flex;
+            margin:0.3rem 0;
+            position:relative;
+            overflow:hidden;
+        }
+        #new i {
+            color:#ffffff;
+            font-size:0.6rem;
+            float:right;
+        }
+
+        .new-kind, .new-group {                                                   
+            float:left;
+            height:1.28rem;
+            line-height:1.28rem;
+            margin:0;
+            padding:0.1rem 0;
+        }
+        .new-kind {
+            width:5.9rem;
+            overflow:hidden;
+            border-right:1px solid #fff;
+        }
+        .new-group {
+            flex:1;
+        }
+        #new span {
+            font-size:0.7rem;
+            color:#fff;
+        }
+        .sort {
+            float:left;
+            margin-left:0.51rem;
+      
+        }
+
+#new .new-kind span{  
+    width:4rem;
+      overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.new-group .sort{
+           width: 8.2rem;
+      overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+        #newKindDown {
+            margin-right:.51rem;
+        }
+        #newGroupDown {
+            margin-right:.51rem;
+        }
+        #headTitle {
+            border-bottom:1px solid #fff;overflow: hidden;
+        }
+        #newKindLists {
+            display:none;
+            position:fixed;
+            z-index:99999;
+            top:4.2rem;
+            width:5.9rem;
+            height:5.65rem;
+        }
+        .kind-list,.group-list{
+            position:relative;
+            z-index:9999999;
+            background:#40D8B8;
+            max-height:5.65rem;
+            margin:0;
+            list-style:none;
+            padding:0;
+            overflow:scroll;    
+        }
+        .kind-list li ,.group-list li{
+            height:1.88rem;
+            line-height:1.88rem;
+            font-size:0.6rem;
+            text-align:center;
+           color:#fff;
+            width:100%;
+            border-bottom:1px solid #fff;
+                overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+                
+        }
+        #newGroupLists {
+            width:10.05rem;
+            display:none;
+            position:fixed;
+            z-index:999;
+            top:4.2rem;
+            right:0;
+        }
+        #container {
+            margin-top:4.3rem;
+        }
+        #container p {
+            height:1.88rem;
+            line-height:1.88rem;
+            margin:0;
+            overflow:hidden;
+            display:flex;
+            border-bottom:1px solid #E7E7E7;
+        }
+        #container p span {
+            display:inline-block;
+            height:0.93rem;
+            line-height:0.93rem;
+            margin-top:0.5rem;
+        }
+        #container p span:first-child {
+            float:left;
+            margin-left:0.4rem;
+            font-size:0.6rem;
+            color:#6F6F6F; 
+            /*font-weight:bold;*/
+        }
+span.kind-value {
+    font-size:.6rem;
+    color:#373737;
+    float:right;
+    margin-right:0.6rem;
+}
+span.group-value {
+    font-size:.6rem;
+    color:#D5D5D5;
+    float:right;
+    margin-right:0.6rem;
+
+}
+.rtStyle {
+     font-size:.6rem;
+    color:#373737;
+    float:right;
+    margin-right:0.6rem;
+    height:1.55rem;
+    /*line-height:1.55rem;*/
+    position: relative;
+      top: .1rem;
+    border:0;
+    outline:none;
+    text-align:right;
+    background:#fff;
+    flex:1;
+}
+span.sproutValue input ,span.activeValue input,span.addValue input{
+    font-family:"Microsoft YaHeiLight";
+    margin-left:0.4rem;
+    display:inline-block;
+    width:10.76rem;
+    height:1.9rem;
+    /*line-height:1.9rem;*/
+    border:1px solid #CCCCCC;
+    padding-left:1rem;
+    text-align:left;
+    font-size:.6rem;
+    color:#666;
+    border-radius:0;
+}
+
+i.ar-minus-sign,i.ar-plus-sign {
+    background:#FAEDED;
+    float:right;
+    width:1.9rem;
+    color:#CCCCCC;
+    height:1.9rem;
+    line-height:1.9rem;
+    text-align:center;
+    margin:0;
+    margin-right:0.5rem;
+    border:1px solid #CCCCCC;
+}
+
+
+#sprout ,#active,div[class*=addContent]{
+    margin-top:0.6rem;
+}
+span.addValue {
+    color:#ccc;
+    font-size:.6rem;
+      font-family:"Microsoft YaHei";
+}
+footer {
+    margin-top:1rem;
+
+    margin-bottom:1rem;
+    display:flex;
+    /*position:absolute;*/
+    /*margin-bottom:1.7rem;*/ 
+    /*left:0;
+    right:0;*/
+}
+#cancle, #save {
+    border-radius:3px;
+    margin:0 0.5rem;
+    flex:1; 
+    border:1px solid #5CDEC2;
+    font-size:.6rem;
+    color:#56DCBF;
+    text-align:center;
+    height:2rem;
+    line-height:2rem;
+}
+#save {
+     background:#40D8B8;
+     color:#fff;
+}
+p.last {
+    border-bottom:2px solid #E7E7E7!important;
+}
+[data-kill] {
+    display:none;
+}
+
+
+.addValue input {padding:0;
+}

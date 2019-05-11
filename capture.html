@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; -->
+    <meta http-equiv="Content-Security-Policy" content=" style-src 'self' 'unsafe-inline'; media-src *">
+    <meta charset="utf-8">
+    <meta id="scale" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>My App</title>
+    <link rel="stylesheet" type="text/css" href="css/tips.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" href="css/normal.css">
+    <link rel="stylesheet" href="css/mushroom.css">
+    <!--<link href="mobiscroll252/dev/css/mobiscroll.core-2.5.2.css" rel="stylesheet" />-->
+    <script src="js/tips.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+    <script type="text/javascript" src="js/fit.js"></script>
+    <link href="mobiscroll.custom/css/mobiscroll.custom-2.17.2.min.css" rel="stylesheet" />
+    <script src="mobiscroll.custom/js/mobiscroll.custom-2.17.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("header").css("padding-top", "1rem");
+                $("section").css("top", "4.877rem");
+                $('header a').css('margin-top','0.08rem');
+                $('.slide').css('top','3rem')
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $('section').css('top','3.877rem')
+                $('.slide').css('top','2rem')
+                return true;
+            };
+        })
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <p>添加数据</p>
+            <a class="back" href="index.html"></a>
+            <a class="check"></a>
+        </header>
+        <section class="tab">
+            <div class="photo hasphoto"></div>
+            <div class="doc">
+                <div class="photo photo-bg">
+                    <img style="margin-top:11rem;width:4rem;height:4rem;" src="images/takephoto.png">
+                    <br>
+
+                </div>
+                <p style="margin-top:2rem;text-align:center;">点击识别</p>
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+
+    <!--====调取摄像头部分start=====-->
+    <script type="text/javascript">
+        if (!window.localStorage) {
+            alert("浏览器不支持localstorage");
+        }
+
+        var img;
+        var imgReady=false;
+        var imgData=null;
+
+        function onPhotoFileSuccess(imageData) {
+            getPersistentImage(imageData,new Date().getTime(),function(URL){
+                imgData=URL;
+                img = JSON.stringify(URL);
+
+                var storage = window.localStorage;
+                storage.setItem("b", img);
+
+                $(".photo img").get(0).src = URL;
+                $('.photo-bg').css('background','none');
+                $('.hasphoto').css('background-image','url('+URL+')');
+                imgReady=true;
+
+            });
+            /*imgData=URL;*/
+            
+        };
+        function capturePhotoWithFile() {
+            navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+        };
+        function onFail(message) {
+            alert('Failed because: ' + message);
+            imgReady=false;
+        };
+    </script>
+    <script type="text/javascript">
+            var auto = location.href.split('?')[1].split('=')[1];
+            //创建一个localStorage对象
+            if (auto == 'true') {
+                capturePhotoWithFile();
+            }
+            if (!window.localStorage) {
+                alert("该浏览器不支持localStorage！");
+            } else {
+                var storage = window.localStorage;
+                if (!JSON.parse(storage.getItem("classify"))) {
+                    var lists = [];
+                    //直接新建
+                }else{
+                    var lists = JSON.parse(storage.getItem("classify"));
+                    //渲染菜单
+                    var mainMenuArr=[];
+                    var mainMenuStr='';
+                    
+                    for(var j=0;j<lists.length;j++){
+                        mainMenuStr+='<li>'+lists[j].kind+'</li>'
+                    }
+                    $('.list1').html(mainMenuStr);
+
+
+                    //item1子菜单
+                    $('.list1 li').on('click',function(){
+                        var text = $(this).text();
+                        $('.variety').val(text);
+                        $('.list1 li').removeClass('active');
+                        $(this).addClass('active');
+                        $(this).parent().siblings().text(text)
+                        $(this).parent().slideUp();
+
+                        getSecData(text);
+                        $('.null-text').hide();
+                        $('#outin').show();
+                        $('#outin span').eq(0).text(text);
+                        return false;
+                    });
+                }
+            };
+            $(document).on('touchstart',function(){
+                $('.pos-list').slideUp();
+            });
+            //item2
+            $('.item2').on('click',function(e){
+                if($('.item1 p').text()=='物种（请选择）'){
+                    showTips({text:'请先选择物种'});
+                    return;
+                }else{
+                    if (!$(this).find('ol').is(':visible')) {
+                        $('.pos-list').slideUp();
+                        $(this).find('ol').slideDown();
+                    }else{
+                        $('.pos-list').slideUp();
+                    }
+                }
+                 e.stopPropagation();
+            });
+
+            $('.item1').on('click', function (e) {
+                //更新次菜单
+                if(!lists.length || !lists){
+                    showTips({text:"暂无物种,请先添加模板"});
+                }else{
+                    if (!$(this).find('ol').is(':visible')) {
+                        $('.pos-list').slideUp();
+                        $(this).find('ol').slideDown();
+                    }else{
+                        $('.pos-list').slideUp();
+                    }
+                }
+                e.stopPropagation();
+            });
+            //品种 //编号
+            $('.breed-name,.number,.townname,.variety').on('keyup',function(){
+                var text=$(this).val();
+                $('.null-text').hide();
+                var klassName=$(this).attr('class');
+                var num=0;
+                switch(klassName){
+                    case 'variety':num=0;break;
+                    case 'breed-name':num=1;break;
+                    case 'number':num=2;break;
+                    case 'townname':num=3;break;
+                }
+                $('#outin').show().find('span').eq(num).text(text);
+            })
+            //分类选择，同步
+            $(".list2 li").on("touchstart", function () {
+                var txt = $(this).text();
+                //同步
+                $(".varietyify").val(txt);
+            });
+            // 时间选择
+            $('.date input').mobiscroll().date({
+                theme: 'mobiscroll',
+                lang: "zh",
+                display: 'bottom',
+                dateFormat: 'yy-mm-dd'
+            });
+
+            $("#dateIcon").on("touchstart", function () {
+                $('#dataTime').mobiscroll("show")
+                return false;
+            });
+            $(".photo img").on("touchstart", function () {
+                capturePhotoWithFile();
+            });
+            
+            //添加记录
+            $('a.check,a.save').on('click',function(e){
+                if(!lists.length || !lists){
+                    showTips({text:"暂无物种,请先添加模板"});
+                }else{
+                    addRecord();
+                }
+            })
+            //取消编辑
+            $('a.cancel').on('click',function(){
+                showPop({title:"系统提示",describe:"确定取消编辑当前数据吗?",callback:function(){
+                    location.href="index.html";
+                }})
+            });
+            function checkData(dataObj){
+                var allLen=$('.option-list li').length;
+                var iCount=0;
+                var noDataNames=[];
+                for(var i=0;i<allLen;i++){
+                    var currentVal=$.trim($('.option-list li').eq(i).find('input').val());
+                    if(!currentVal || currentVal==0){
+                        noDataNames.push($('.option-list li').eq(i).find('span').text())
+                    }else{
+                        iCount++;
+                    }
+                }
+
+                var checkContent=false;
+                //验证content
+                if($('div.content').is(':visible') && !$('div.content').val()){
+                    checkContent=false;
+                    noDataNames.push($('div.content h4').text());
+                }
+                //数据整理
+                    //默认数据
+                    for(var b=0;b<$('.option-list1 li').length;b++){
+                        var itemOptionName=$.trim($('.option-list1 li').eq(b).find('input').attr('name'));
+                        var itemOptionVal=$.trim($('.option-list1 li').eq(b).find('input').val());
+                        dataObj[itemOptionName]=itemOptionVal;
+                    }
+                    dataObj.src=imgData;
+                    dataObj.time=new Date().getTime();
+                    //模板数据
+                    dataObj.details={};
+                    if($('.option-list2 li').length>0){
+                        for(var g=0;g<$('.option-list2 li').length;g++){
+                            var key=$.trim($('.option-list2 li').eq(g).find('span').text());
+                            var va=$.trim($('.option-list2 li').eq(g).find('input').val());
+                            dataObj.details[key]=va;
+                        }
+                    }
+
+                //检查数据
+                var n=localIsHas($.trim($('.variety').val()),$.trim($('.group-name').val()));
+                if(iCount!=allLen){
+                    //信息未完善
+                    showPop({
+                        title:"温馨提示",
+                        describe:"数据尚未完善,确定要添加吗？",
+                        callback:function(){
+                            saveLocal(n,dataObj)
+                        }
+                    })
+                }else{
+                    showPop({
+                        title:"温馨提示",
+                        describe:"确定保存当前纪录吗？",
+                        callback:function(){
+                            saveLocal(n,dataObj)
+                        }
+                    })
+                }
+            }
+
+            function addRecord(){
+                var dataObj={};
+                if(imgReady){
+                    if(!$.trim($('.variety').val())){
+                        showTips({text:"请填写物种名"});
+                        return;
+                    }else if(!$.trim($('.group-name').val())){
+                        showTips({text:"请填写组名"});
+                        return;
+                    }
+                    //数据是否完善
+                    checkData(dataObj);
+                }else{
+                    showTips({text:"请先拍照"});
+                }
+            }
+
+        
+
+        //新建纪录保存
+        function saveLocal(x,data){
+            var lists=JSON.parse(localStorage.getItem('indexList'));
+            var classify=JSON.parse(localStorage.getItem('classify'));
+            if(!lists)lists={'list':[]};
+            if(!classify)classify=[]
+            console.log(data);
+            var n=x;
+            //0 有物种有分类  1 有物种无分类（新建分类） 2无物种
+            //2017年6月9日 15:28:33   不可手动填写    只有0
+            switch(n){   
+                case 0:
+                    lists.list.unshift(data);
+                    save();
+                break;
+                case 1:
+                    lists.list.unshift(data);
+                    for(var k=0;k<classify.length;k++){
+                        if(classify[k].kind==data.name){
+                            classify[k].group[data.classify]={};
+                            save();
+                            return;
+                        }else{
+                            continue;
+                        }
+                    }
+                break;
+                case 2:
+                    lists.list.unshift(data);
+                    var obj={};
+                    obj.kind=data.name;
+                    obj.group={};
+                    obj.group[data.classify]={};
+                    classify.unshift(obj);
+                    save();
+                break;
+            }
+            function save(){
+                localStorage.setItem('indexList',JSON.stringify(lists));
+                localStorage.setItem('classify',JSON.stringify(classify));
+
+                showTips({text:"数据添加成功",success:function(){
+                    location.href="index.html"
+                }});
+            }
+        }
+    </script>
+</body>
+
+</html>

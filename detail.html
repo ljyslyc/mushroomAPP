@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; -->
+    <meta http-equiv="Content-Security-Policy" content=" style-src 'self' 'unsafe-inline'; media-src *">
+    <meta charset="utf-8">
+    <meta id="scale" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>My App</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/tips.css">
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.custom-2.17.2.min.css">
+    <link rel="stylesheet" href="css/normal.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.custom-2.17.2.min.js"></script>
+    <script type="text/javascript" src="js/fit.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("header").css("padding-top", "1rem");
+                $("section").css("top", "4.877rem");
+                $('header a').css('margin-top','0.08rem');
+                $('.slide').css('top','3rem')
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $('section').css('top','3.877rem')
+                $('.slide').css('top','2rem')
+                return true;
+            };
+        })
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <p>记录详情</p>
+            <a class="back" href="javascript:history.go(-1);"></a>
+            <a class="check" href="javascript:;"></a>
+            <div class="choose-box">
+                <div class="item1">
+                    <p>物种（请选择）</p>
+                    <ol class="pos-list list1">
+                        
+                    </ol>
+                </div>
+                <div class="item2">
+                    <p>分类（请选择）</p>
+                    <ol class="pos-list list2">
+                        
+                    </ol>
+                </div>
+            </div>
+        </header>
+        <section class="hasFooter">
+            <div class="photo hasphoto"></div>
+            <div class="doc">
+                <div class="photo photopos">
+                    <!-- <img src="img/img2.png">
+                    <div class="photo-des">
+                        <h2>大叶栀子花</h2>
+                        <span>AZ00021245-2</span>
+                        <h5>2017-6-5 11:25:48</h5>
+                        <p class="address">武汉市洪山区光谷广场</p>
+                    </div> -->
+                </div>
+                <ul class="option-list option-list1">
+                    <!-- 输入模式 -->
+                    <li class="clearfix">
+                        <span>物种名</span>
+                        <input readonly class="variety" type="text" name="" placeholder="请输入">
+                    </li>
+                    <li class="clearfix">
+                        <span>组名</span>
+                        <input readonly class="group-name"  readonly type="text" name="" placeholder="请输入">
+                    </li>
+                    <li class="clearfix className">
+                        <span>品种名</span>
+                        <input class="breed-name" type="text" name="" placeholder="请输入">
+                    </li>
+                    <li class="clearfix">
+                        <span>编号</span>
+                        <input class="number" type="text" name="" placeholder="请输入">
+                    </li>
+                    <!-- 输入可不填模式 -->
+                    <li class="clearfix townName">
+                        <span>小区名</span>
+                        <input type="text" name="" placeholder="请输入(可不填)">
+                    </li>
+                    <li class="clearfix date bz">
+                        <span>播种期</span>
+                        <i class="date-icon"  id="dateIcon"></i>
+                        <input readonly value="2016-07-08"  placeholder="请输入日期" >
+                    </li>  
+                    <li class="clearfix date cm">
+                        <span>出苗期</span>
+                        <i class="date-icon" id="dateIcon"></i>
+                        <input readonly value="2016-07-08" placeholder="请输入日期">
+                    </li>  
+                    <li class="clearfix percent cml">
+                        <span>出苗率</span>
+                        <em>%</em>
+                        <input type="number" name="" placeholder="请输入">
+                    </li>
+                    <li class="clearfix date kh">
+                        <span>开花期</span>
+                        <i class="date-icon" id="dateIcon"></i>
+                        <input readonly value="2016-07-08" placeholder="请输入日期">
+                    </li>  
+                </ul>
+                <ul class="option-list detail-list"></ul>
+                <div class="content" style="display: none;">
+                    <h4 class="des-title">综合分析</h4>
+                    <textarea></textarea>
+                </div>
+
+                <div class="foot_s">
+                    <a class="cancel" href="javascript:;">取消编辑</a>
+                    <a class="save" href="javascript:;">保存修改</a>
+                </div>
+            </div>
+            
+        </section>
+       
+    </div>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/tips.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+    if (!localStorage) {
+        alert('您的浏览器不支持本地存储');
+    }
+    showLoadingPop({ text: "加载中" })
+    var id = location.search.split('=')[1];
+    //获得当前数据和总分类
+    var data = getData('indexList', id);
+    var allClassify = JSON.parse(localStorage.getItem('classify'));
+    //当前物种和类
+    var currentName = data.name;
+    var currentClass = data.classify;
+    var timer = null;
+    //主类和次类
+
+    var str1 = '';
+    var str2 = '';
+    for (var i = 0; i < allClassify.length; i++) {
+        if (allClassify[i].kind == currentName) {
+            $('.item1 p').text(currentName);
+            str1 += '<li class="active">' + allClassify[i].kind + '</li>'
+        } else {
+            str1 += '<li>' + allClassify[i].kind + '</li>'
+        }
+    }
+    $('.item2 p').text(currentClass);
+    $('.list1').append(str1);
+    //找到kind下面所有的类目
+    getSec(currentName, currentClass);
+
+    //图片信息
+    update(data);
+    //选择类
+    var mainIndex = null;
+    $('.item2').on('touchstart', function (e) {
+        $('.pos-list').slideUp();
+
+        if (!$(this).find('ol').is(':visible')) {
+            $(this).find('ol').slideDown();
+        } else {
+            $(this).find('ol').slideUp();
+        }
+        e.stopPropagation();
+    })
+
+    //main
+    $('.list1 li').on('touchstart', function () {
+        $('.list1 li').removeClass('active');
+        $(this).addClass('active');
+
+        $(this).parent().siblings().text($(this).text());
+        $('.variety').val($(this).text());
+        //每次选择主类都更新次类
+        var currentDefaultSec = $('.item2 p').text();
+        getSec($(this).text(), currentDefaultSec);
+    })
+    //取消编辑
+    $('a.cancel').on('touchstart', function () {
+        showPop({
+            title: "提示",
+            describe: "是否取消编辑当前数据",
+            callback: function () {
+                location.href = "index.html"
+            }
+        })
+    });
+    $(document).on('touchstart',function(){
+        $('.pos-list').slideUp();
+    });
+    //保存修改
+    $('a.save,a.check').on('touchstart', function () {
+
+        var mainObj = {};
+        var detailsObj = {};
+
+        var detailsData = document.querySelectorAll('.detail-list li');
+
+        mainObj.name = $.trim($('.variety').val());
+        mainObj.classify = $.trim($('.group-name').val());
+        mainObj.breedName = $.trim($('.breed-name').val());
+        mainObj.number = $.trim($('.number').val());
+        mainObj.address = $.trim($('.townName input').val());
+        mainObj.seedTime = $.trim($('.bz input').val());
+        mainObj.sproutTime = $.trim($('.cm input').val());
+        mainObj.sproutPercent = $.trim($('.cml input').val());
+        mainObj.bloomTime = $.trim($('.kh input').val());
+
+        var lent = detailsData.length;
+        for (var j = 0; j < lent; j++) {
+            var _text = $(detailsData[j]).find('span').text();
+            detailsObj[_text] = $.trim($(detailsData[j]).find('input').val());
+        }
+
+        if ($('.content').is(':visible')) {
+            detailsObj[$('.content h4').text()] = $.trim($('.content textarea').val());
+        }
+
+        showPop({
+            title: "温馨提示", describe: "确认修改当前数据吗", callback: function () {
+                if (save(id, mainObj, detailsObj)) {
+                    showTips({
+                        text: "数据修改成功", success: function () {
+                            location.href = "index.html";
+                        }
+                    });
+                } else {
+                    showTips({ text: "数据修改失败，请稍候再试" });
+                }
+            }
+        })
+    });
+
+    //日期選擇器
+    $('.date input').mobiscroll().date({
+        theme: 'mobiscroll',
+        lang: "zh",
+        display: 'bottom',
+        dateFormat: 'yy-mm-dd'
+    });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; -->
+    <meta http-equiv="Content-Security-Policy" content=" style-src 'self' 'unsafe-inline'; media-src *">
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>My App</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/tips.css">
+    <link rel="stylesheet" href="css/normal.css">
+    <link rel="stylesheet" href="css/mushroom.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/fit.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("header").css("padding-top", "1rem");
+                $("section").css("top", "3rem");
+                $('header a').css('margin-top', '0.08rem');
+                $('.slide').css('top', '3rem')
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $('section').css('top', '2rem')
+                $('.slide').css('top', '2rem')
+                return true;
+            }
+            ;
+        })
+
+    </script>
+</head>
+<body>
+<div id="container">
+    <!--app 首页-->
+    <div class="appIndex">
+        <p class="mushroomLogo">
+            <img src="./images/appIndex.png" alt="mushroom">
+        </p>
+        <p class="desc" style="font-size:1.2rem;">蘑菇识别</p>
+        <!--<p style="text-align:center;margin-top:1rem;opacity: 0.5;text-align:center;">点击屏幕开始识别</p>-->
+        <p style="position:relative;bottom:-7rem;opacity: 0.5;text-align:center;">点击图标开始识别</p>
+        <p style="position:relative;bottom:-11rem;text-align:center;opacity: 0.5;font-size:10px;">拍照识别蘑菇种类</p>
+    </div>
+    <!--拍照页面1-->
+    <div class="captureSpot">
+        <header>
+            <p>蘑菇识别</p>
+            <a class="back1"></a>
+            <a class="check1" id="localPhotoClick"></a>
+        </header>
+        <div class="photo hasphoto"></div>
+        <div class="doc">
+            <div class="photo photo-bg">
+                <img src="images/Photo.png" id="clickCapture" style="width:2rem;height:2rem;margin-top:11rem;">
+            </div>
+            <p style="text-align:center;margin-top:3rem;">
+                点击识别
+            </p>
+        </div>
+        <div style="margin-top:3rem ;text-align:center;" id="photoClick" >
+            <p class="textCenter" style="padding-top:2rem;">
+                <img src="./images/Update.png" alt="logo" style="width:0.7rem;height:0.7rem;">
+            </p>
+            <p class="textCenter" style="opacity: 0.5;font-size:0.8rem;margin-top:20px;">点击刷新重新识别</p>
+        </div>
+        <p style="position:relative;bottom:-5rem;text-align:center;opacity: 0.5;font-size:10px;">拍照识别蘑菇种类</p>
+    </div>
+    <div class="capture">
+        <header>
+            <p>蘑菇识别</p>
+            <a class="back1"></a>
+            <a class="check1" id="localPhotoClick1"></a>
+        </header>
+        <div class="photo hasphoto" style="margin-top:-2rem;"></div>
+        <div class="doc">
+            <div class="photo photo-bg" style="padding-left:28%;">
+                <div class="textCenter" style="margin-top:28%;">
+                    <span id="mushNames">毒蘑菇</span>
+                    <span id="mushTrustls">相似度:96.15%</span>
+                </div>
+            </div>
+        </div>
+        <!--图片概要-->
+        <div class="summary">
+            <div class="summaryImg">
+                <div id="summaryImgs">
+                    <div class="leftPart">
+                        <p><img id="mushroomImg" src="./images/7.jpg" alt="logo" style="width:100%;"></p>
+                    </div>
+                    <div class="rightPart">
+                        <p class="name textLeft" id="mushroomName">毒蘑菇</p>
+                        <p class="textLeft fontsize12" id="mushroomFenlei">伞菌目 红菇科 | 红菇属</p>
+                        <p class="textLeft fontsize12" id="mushroomEnglishName">Russula emetica</p>
+                        <p class="textLeft fontsize12" id="mushroomOrigin">(嘿吐红菇、棺材盖子)</p>
+                        <p class="textCenter fontsize12" style="color:#F26933;margin-top:10px;">详细特征</p>
+                    </div>
+                </div>
+
+                <div style="text-align:center;" id="photoClick1" >
+                    <p class="textCenter" style="padding-top:2rem;">
+                        <img src="./images/Update.png" alt="logo" style="width:0.7rem;height:0.7rem;">
+                    </p>
+                    <p class="textCenter" style="opacity: 0.5;font-size:0.8rem;margin-top:20px;">点击刷新重新识别</p>
+                </div>
+            </div>
+        </div>
+        <p style="position:relative;bottom:-4rem;text-align:center;opacity: 0.5;font-size:10px;">拍照识别蘑菇种类</p>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+
+    <script src="data/indexList.js"></script>
+    <script src="data/classify.js"></script>
+
+    <script src="js/tips.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/imgDemo.js"></script>
+    <script type="text/javascript" charset="utf-8" src="json2.js"></script>
+    <!--====调取摄像头部分start=====-->
+    <script type="text/javascript">
+        if (! window.localStorage) {
+            alert("浏览器不支持localstorage");
+        }
+        var pictureSource;   // picture source
+        var destinationType; // sets the format of returned value
+
+        // Wait for Cordova to connect with the device
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // Cordova is ready to be used!
+        function onDeviceReady () {
+            pictureSource = navigator.camera.PictureSourceType;
+            destinationType = navigator.camera.DestinationType;
+        }
+
+        var imgReady = false;
+
+        /**
+         * 调取候机摄像头拍照成功
+         * @param message
+         */
+        function onPhotoFileSuccess (imageData) {
+            $(".capture").css("display", "block");
+            $(".captureSpot").css("display", "none");
+            $(".appIndex").css("display", "none");
+            getPersistentImage(imageData, new Date().getTime(), function (URL) {
+                $('.photo-bg').css('background', 'none');
+                $('.hasphoto').css('background-image', 'url(' + URL + ')');
+                var randomNum = parseInt(Math.random()*(3-1+1)+1,10);
+                var data;
+                for (var i = 0; i < mushroomDatas.length; i ++) {
+                    if (mushroomDatas[ i ].id == randomNum) {
+                        data = mushroomDatas[ i ];
+                    }
+                }
+                $("#mushroomImg").get(0).src = data.url;
+                $("#mushroomImg").data("currDatas", data.id);
+                $("#mushroomTrustL").text(data.trustL);
+                $("#mushTrustls").text(data.trustL);
+                $("#mushroomFenlei").text(data.fenlei);
+                $("#mushroomName").text(data.name);
+                $("#mushNames").text(data.name);
+                $("#mushroomEnglishName").text(data.englishName);
+                imgReady = true;
+            });
+        };
+        function testFn () {
+            $(".capture").css("display", "block");
+            $(".captureSpot").css("display", "none");
+            $(".appIndex").css("display", "none");
+            var URL = "./images/1.jpg";
+            $('.photo-bg').css('background', 'none');
+            $('.hasphoto').css('background-image', 'url(' + URL + ')');
+            var randomNum = parseInt(Math.random()*(3-1+1)+1,10);
+            var data;
+            for (var i = 0; i < mushroomDatas.length; i ++) {
+                if (mushroomDatas[ i ].id == randomNum) {
+                    data = mushroomDatas[ i ];
+                }
+            }
+
+            $("#mushroomImg").get(0).src = data.url;
+            $("#mushroomImg").data("currDatas", data.id);
+            $("#mushroomTrustL").text(data.trustL);
+            $("#mushTrustls").text(data.trustL);
+            $("#mushroomFenlei").text(data.fenlei);
+            $("#mushroomName").text(data.name);
+            $("#mushNames").text(data.name);
+            $("#mushroomEnglishName").text(data.englishName);
+            imgReady = true;
+        }
+
+        /**
+         * 调取手机摄像头进行拍照
+         */
+        function capturePhotoWithFile () {
+            navigator.camera.getPicture(onPhotoFileSuccess, onFail, {
+                quality: 50,
+                destinationType: destinationType.FILE_URI
+            });
+        };
+
+        /**
+         * 调取手机本地图片
+         */
+        function getPhoto (source) {
+            navigator.camera.getPicture(onPhotoFileSuccess, onFail, {
+                quality: 50,
+                destinationType: destinationType.FILE_URI,
+                sourceType: source,
+            });
+        }
+        /**
+         * 调取候机摄像头拍照失败
+         * @param message
+         */
+        function onFail (message) {
+            alert('Failed because: ' + message);
+            imgReady = false;
+        };
+    </script>
+    <script type="text/javascript">
+
+        $(".appIndex").on("touchstart", function () {
+            $(".capture").css("display", "none");
+            $(".appIndex").css("display", "none");
+            $(".captureSpot").css("display", "block");
+        });
+
+        $("#summaryImgs").on("touchstart", function () {
+            var id = $("#mushroomImg").data("currDatas");
+            location.href = "addRecord.html?id=" + id;
+        })
+        $("#localPhotoClick").on("touchstart", function () {
+            getPhoto(pictureSource.PHOTOLIBRARY);
+        })
+        $("#localPhotoClick1").on("touchstart", function () {
+            getPhoto(pictureSource.PHOTOLIBRARY);
+        })
+        $("#photoClick").on("touchstart", function () {
+            capturePhotoWithFile();
+            // testFn();
+        })
+        $("#photoClick1").on("touchstart", function () {
+            capturePhotoWithFile();
+            // testFn();
+        })
+        /**
+         * 点击拍照图片
+         */
+        $("#clickCapture").on("touchstart", function () {
+            capturePhotoWithFile();
+            // testFn();
+        })
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; -->
+    <meta http-equiv="Content-Security-Policy" content=" style-src 'self' 'unsafe-inline'; media-src *">
+    <meta charset="utf-8">
+    <meta id="scale" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>My App</title>
+    <link rel="stylesheet" type="text/css" href="css/tips.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" href="css/normal.css">
+    <link rel="stylesheet" href="css/mushroom.css">
+    <!--<link href="mobiscroll252/dev/css/mobiscroll.core-2.5.2.css" rel="stylesheet" />-->
+    <script src="js/tips.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+    <script type="text/javascript" src="js/fit.js"></script>
+    <link href="mobiscroll.custom/css/mobiscroll.custom-2.17.2.min.css" rel="stylesheet" />
+    <script src="mobiscroll.custom/js/mobiscroll.custom-2.17.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                $("header").css("padding-top", "1rem");
+                $("section").css("top", "4.877rem");
+                $('header a').css('margin-top','0.08rem');
+                $('.slide').css('top','3rem')
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                $('section').css('top','3.877rem')
+                $('.slide').css('top','2rem')
+                return true;
+            };
+        })
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <p>详细介绍</p>
+            <a class="back1" href="index.html"></a>
+        </header>
+        <div class="doc" id="doc">
+            <div class="photo photo-bg" style="padding-left:25%;">
+                <div class="textCenter" style="margin-top:75%;">
+                    <span id="mushNames">毒蘑菇</span>
+                    <span id="mushTrustls">相似度:96.15%</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:12rem;" id="cnt">
+            <div style="margin-left:10%;margin-right:10%;">
+                <p><img src="./images/Giant5.png" alt="logo" style="position: relative;top:26px;left:-27px;height:20px;"></p>
+                <p style="font-size:20px;color:#002B41;margin-bottom:15px;">形态特征</p>
+                <p style="font-size:16px;color:#666666;" id="recordFeature">减少线程等待，同时提高线程占用资源的利用率。(从这 点上说，理想和现实还是有很多细节差异的，在实现的时 候必须根据依赖系统消耗时间占总时间的比例看是否需要 事件驱动，事件驱动带来的切换消耗是比较大的)
+                </p>
+            </div>
+            <div style="margin-left:10%;margin-top:10px;margin-right:10%;">
+                <p><img src="./images/Giant5.png" alt="logo" style="position: relative;top:26px;left:-27px;height:20px;"></p>
+                <p style="font-size:20px;color:#002B41;margin-bottom:15px;">生物习性</p>
+                <p style="font-size:16px;color:#666666;" id="recordHabit">的比例看是否需要 事件驱动，事件驱动带来的切换消耗是比较大</p>
+            </div>
+            <div style="margin-left:10%;margin-top:5px;">
+                <p><img src="./images/Giant5.png" alt="logo" style="position: relative;top:26px;left:-27px;height:20px;"></p>
+                <p style="font-size:20px;margin-bottom:15px;">图例</p>
+                <ul style="overflow:hidden;text-align:center;" id="showImages">
+                    <li style="float:left;width:32%;"><img style="width:100%;height:100px;" src="./images/Giant4.png" alt="logo"></li>
+                    <li style="float:left;width:32%;"><img style="width:100%;height:100px;" src="./images/Giant2.png" alt="logo"></li>
+                    <li style="float:left;width:32%;"><img style="width:100%;height:100px;" src="./images/Giant3.png" alt="logo"></li>
+                </ul>
+            </div>
+        </div>
+        <p style="position:relative;bottom:-1rem;text-align:center;opacity: 0.5;font-size:12px;margin-bottom:14px;">拍照识别蘑菇种类</p>
+        <div id="overlay"></div>
+        <div id="currImg"><img src="" alt=""></div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script src="js/imgDemo.js"></script>
+    <script type="text/javascript">
+        var id = location.href.split('?')[1].split('=')[1];
+        var data;
+        for(var i=0;i<mushroomDatas.length;i++){
+            if(mushroomDatas[i].id == id){
+                data = mushroomDatas[i];
+            }
+        }
+        var imgUrl = data.url;
+        // $('.hasphoto1').css('background-image', 'url(' + imgUrl + ')');
+        $("#recordName").text(data.name);
+        $("#recordEnglishName").text(data.englishName);
+        $("#recordFeature").text(data.feature);
+        $("#recordHabit").text(data.habit);
+        $("#mushNames").text(data.name);
+        $("#mushTrustls").text(data.trustL);
+        $("#showImages img").on("touchstart", function () {
+            $("#overlay").show();
+            var src = $(this)[0].src;
+            $("#overlay").get(0).display = "block";
+            var height1 = $("#doc").height();
+            var height2 = $("#cnt").height();
+            $("#overlay").css("height",height1+height2+ "px");
+            $("#overlay").css("width","100%");
+            $("#currImg").show();
+            $("#currImg img").get(0).src =src;
+        })
+        $("#currImg img").on("touchstart",function(){
+            $("#overlay").hide();
+            $("#currImg").hide();
+        })
+    </script>
+</body>
+
+</html>

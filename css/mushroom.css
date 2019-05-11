@@ -1,0 +1,96 @@
+#container .appIndex .mushroomLogo img{
+    width:50%;
+}
+#container .mushroomLogo {
+    text-align:center;
+    margin-top:2rem;
+}
+#container .appIndex p.title{
+    font-size:30px;
+    text-align:center;
+    margin-top:2rem;
+}
+#container .appIndex p.desc{
+    font-size:20px;
+    margin-top:2rem;
+    text-align:center;
+}
+#container .capture {
+    display:none;
+}
+#container .capture div.header{
+    overflow:hidden;
+}
+.summaryImg{
+    font-size:12px;
+    overflow:hidden;
+    margin-top:1rem;
+}
+.summaryImg div.leftPart {
+    float:left;
+    width:45%;
+    margin-left:2%;
+}
+.summaryImg div.rightPart{
+    float:right;
+    width:45%;
+    margin-right:2%;
+}
+.summaryImg div.rightPart p.name{
+    font-size:22px;
+    font-weight:bold;
+}
+.textLeft{
+    text-align:left;
+    margin-top:2px;
+}
+.textright{
+    text-align:right;
+}
+.textCenter{
+    text-align:center;
+}
+.fontsize18{
+    font-size:18px;
+}
+.fontsize12{
+    font-size:12px;
+}
+.captureSpot{
+    display:none;
+}
+#photoClick{
+    width:80%;
+    margin:0 auto;
+}
+#photoClick1{
+    width:80%;
+    margin:0 auto;
+}
+#mushroomFenlei,#mushroomEnglishName,#mushroomOrigin{
+    color:#888888;
+}
+#overlay{
+    background: #000;
+    filter: alpha(opacity=50); /* IE的透明度 */
+    opacity: 0.7;  /* 透明度 */
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100; /* 此处的图层要大于页面 */
+}
+#currImg{
+    display:none;
+    position: absolute;
+    bottom: 8%;
+    z-index: 150; /* 此处的图层要大于页面 */
+    text-align:center;
+    width:100%;
+}
+#currImg img{
+    width:60%;
+}
+#summaryImgs{
+    overflow:hidden;
+}
